@@ -1,5 +1,6 @@
 package com.example.frontvynils.viewmodels
 
+//import com.example.frontvynils.repositories.CollectorsRepository
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -7,20 +8,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.frontvynils.models.Album
-import com.example.frontvynils.repositories.AlbumRepository
+import com.example.frontvynils.models.Track
+import com.example.frontvynils.repositories.TracksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AlbumViewModel(application: Application) :  AndroidViewModel(application) {
+class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel(application) {
 
-    private val albumsRepository = AlbumRepository(application)
+    private val tracksRepository = TracksRepository(application)
 
-    private val _albums = MutableLiveData<List<Album>>()
+    private val _tracks = MutableLiveData<List<Track>>()
 
-    val albums: LiveData<List<Album>>
-        get() = _albums
+    val tracks: LiveData<List<Track>>
+        get() = _tracks
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -32,6 +33,8 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    val id:Int = albumId
+
     init {
         refreshDataFromNetwork()
     }
@@ -40,8 +43,8 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
         try {
             viewModelScope.launch (Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    val data = albumsRepository.refreshData()
-                    _albums.postValue(data)
+                    val data = tracksRepository.refreshData(id)
+                    _tracks.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
@@ -52,16 +55,15 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
         }
     }
 
-
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val albumId: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(TrackViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AlbumViewModel(app) as T
+                return TrackViewModel(app, albumId) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

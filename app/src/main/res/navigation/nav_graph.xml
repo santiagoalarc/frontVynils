@@ -18,6 +18,17 @@
         android:name="com.example.frontvynils.ui.AlbumFragment"
         android:label="album_fragment"
         tools:layout="@layout/album_fragment" >
+        <action
+            android:id="@+id/action_albumFragment_to_trackFragment"
+            app:destination="@id/trackFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/trackFragment"
+        android:name="com.example.frontvynils.ui.TrackFragment"
+        android:label="track_fragment"
+        tools:layout="@layout/track_fragment" >
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

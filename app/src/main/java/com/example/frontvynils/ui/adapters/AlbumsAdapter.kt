@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.AlbumItemBinding
 import com.example.frontvynils.models.Album
+import com.example.frontvynils.ui.AlbumFragmentDirections
 
 class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
 
@@ -37,9 +39,9 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
         }
         holder.bind(albums[position])
         holder.viewDataBinding.root.setOnClickListener {
-            //val action = AlbumFragmentDirections.actionAlbumFragmentToCommentFragment(albums[position].albumId)
+            val action = AlbumFragmentDirections.actionAlbumFragmentToTrackFragment(albums[position].albumId)
             // Navigate using that action
-            //holder.viewDataBinding.root.findNavController().navigate(action) //TODO no hay comentarios
+            holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 
