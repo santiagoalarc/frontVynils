@@ -26,6 +26,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"
                 tools:ignore="UseCompoundDrawables">
 
                 <TextView
