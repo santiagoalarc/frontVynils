@@ -15,16 +15,16 @@ import com.example.frontvynils.databinding.AlbumItemBinding
 import com.example.frontvynils.models.Album
 import com.example.frontvynils.ui.AlbumFragmentDirections
 
-class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
+class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
-    var albums :List<Album> = emptyList()
+    var albums: List<Album> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    var album :Album? = null
+    var album: Album? = null
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
@@ -36,7 +36,8 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
             LayoutInflater.from(parent.context),
             AlbumViewHolder.LAYOUT,
             parent,
-            false)
+            false
+        )
         return AlbumViewHolder(withDataBinding)
     }
 
@@ -46,7 +47,8 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
         }
         holder.bind(albums[position])
         holder.viewDataBinding.root.setOnClickListener {
-            val action = AlbumFragmentDirections.actionAlbumFragmentToTrackFragment(albums[position].albumId)
+            val action =
+                AlbumFragmentDirections.actionAlbumFragmentToTrackFragment(albums[position].albumId)
             // Navigate using that action
             holder.viewDataBinding.root.findNavController().navigate(action)
         }
@@ -55,7 +57,6 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
     override fun getItemCount(): Int {
         return albums.size
     }
-
 
     class AlbumViewHolder(val viewDataBinding: AlbumItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -70,12 +71,11 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.loading_animation)
-
-                        .error(R.drawable.ic_broken_image))
+                        .error(R.drawable.ic_broken_image)
+                )
                 .into(viewDataBinding.albumCover)
         }
 
     }
-
 
 }

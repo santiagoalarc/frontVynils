@@ -27,7 +27,7 @@ class AlbumFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = AlbumFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = AlbumsAdapter()
@@ -41,13 +41,17 @@ class AlbumFragment : Fragment() {
         recyclerView.adapter = viewModelAdapter
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
         activity.actionBar?.title = getString(R.string.title_albums)
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(AlbumViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            AlbumViewModel.Factory(activity.application)
+        )[AlbumViewModel::class.java]
         viewModel.albums.observe(viewLifecycleOwner) {
             it.apply {
                 viewModelAdapter!!.albums = this
@@ -57,15 +61,17 @@ class AlbumFragment : Fragment() {
             if (isNetworkError) onNetworkError()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     private fun onNetworkError() {
-        if(!viewModel.isNetworkErrorShown.value!!) {
+        if (!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
     }
+
 }

@@ -11,9 +11,9 @@ import com.example.frontvynils.databinding.CollectorItemBinding
 import com.example.frontvynils.models.Collector
 import com.example.frontvynils.ui.CollectorFragmentDirections
 
-class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHolder>(){
+class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHolder>() {
 
-    var collectors :List<Collector> = emptyList()
+    var collectors: List<Collector> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -24,7 +24,8 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
             LayoutInflater.from(parent.context),
             CollectorViewHolder.LAYOUT,
             parent,
-            false)
+            false
+        )
         return CollectorViewHolder(withDataBinding)
     }
 
@@ -43,7 +44,6 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
         return collectors.size
     }
 
-
     class CollectorViewHolder(val viewDataBinding: CollectorItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
         companion object {
@@ -51,6 +51,5 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
             val LAYOUT = R.layout.collector_item
         }
     }
-
 
 }

@@ -10,7 +10,9 @@ import com.example.frontvynils.R
 import com.example.frontvynils.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()

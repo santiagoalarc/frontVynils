@@ -40,13 +40,14 @@ class CollectorFragment : Fragment() {
         recyclerView.adapter = viewModelAdapter
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
         activity.actionBar?.title = getString(R.string.title_collectors)
-        viewModel = ViewModelProvider(this, CollectorViewModel.Factory(activity.application)).get(CollectorViewModel::class.java)
+        viewModel = ViewModelProvider(this, CollectorViewModel.Factory(activity.application))[CollectorViewModel::class.java]
         viewModel.collectors.observe(viewLifecycleOwner) {
             it.apply {
                 viewModelAdapter!!.collectors = this
@@ -67,4 +68,5 @@ class CollectorFragment : Fragment() {
             viewModel.onNetworkErrorShown()
         }
     }
+
 }
