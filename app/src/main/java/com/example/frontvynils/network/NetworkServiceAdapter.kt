@@ -18,7 +18,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
-        const val BASE_URL = "http://192.168.20.90:3000/"
+        const val BASE_URL = "http://34.83.225.10:3000/"
         var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
