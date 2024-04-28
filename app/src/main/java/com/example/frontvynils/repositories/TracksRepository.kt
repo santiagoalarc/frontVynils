@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.frontvynils.models.Track
 import com.example.frontvynils.network.NetworkServiceAdapter
 
-class TracksRepository (val application: Application){
+class TracksRepository(val application: Application) {
     suspend fun refreshData(albumId: Int): List<Track> {
         //var potentialResp = CacheManager.getInstance(application.applicationContext).getTracks(albumId)
         //if(potentialResp.isEmpty()){

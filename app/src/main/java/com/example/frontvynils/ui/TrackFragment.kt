@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.TrackFragmentBinding
-import com.example.frontvynils.models.Album
 import com.example.frontvynils.ui.adapters.AlbumsAdapter
 import com.example.frontvynils.ui.adapters.TracksAdapter
 import com.example.frontvynils.viewmodels.TrackViewModel
@@ -25,6 +24,7 @@ import com.example.frontvynils.viewmodels.TrackViewModel
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class TrackFragment : Fragment() {
+
     private var _binding: TrackFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -35,7 +35,7 @@ class TrackFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = TrackFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = TracksAdapter()
@@ -49,6 +49,7 @@ class TrackFragment : Fragment() {
         recyclerView.adapter = viewModelAdapter
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
@@ -73,12 +74,11 @@ class TrackFragment : Fragment() {
             it.apply {
                 viewAlbumModelAdapter!!.album = this
                 binding.album = viewAlbumModelAdapter!!.album
-                val album_cover = viewAlbumModelAdapter!!.album?.cover
-                if (album_cover != null) {
+                val albumCover = viewAlbumModelAdapter!!.album?.cover
+                if (albumCover != null) {
                     Glide.with(requireContext())
                         .load(
-                            album_cover.toUri().buildUpon().scheme("https")
-                                ?.build()
+                            albumCover.toUri().buildUpon().scheme("https")?.build()
                         )
                         .apply(
                             RequestOptions()
@@ -93,6 +93,7 @@ class TrackFragment : Fragment() {
             if (isNetworkError) onNetworkError()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -104,4 +105,5 @@ class TrackFragment : Fragment() {
             viewModel.onNetworkErrorShown()
         }
     }
+
 }

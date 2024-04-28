@@ -9,9 +9,9 @@ import com.example.frontvynils.R
 import com.example.frontvynils.databinding.TrackItemBinding
 import com.example.frontvynils.models.Track
 
-class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>(){
+class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>() {
 
-    var tracks :List<Track> = emptyList()
+    var tracks: List<Track> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -22,7 +22,8 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>(){
             LayoutInflater.from(parent.context),
             TrackViewHolder.LAYOUT,
             parent,
-            false)
+            false
+        )
         return TrackViewHolder(withDataBinding)
     }
 
@@ -36,7 +37,6 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>(){
         return tracks.size
     }
 
-
     class TrackViewHolder(val viewDataBinding: TrackItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
         companion object {
@@ -44,6 +44,5 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>(){
             val LAYOUT = R.layout.track_item
         }
     }
-
 
 }
