@@ -17,6 +17,7 @@
     <string name="album_name_placeholder">Nombre del album</string>
     <string name="album_description_placeholder">Descripcion del album</string>
     <string name="txt_no_tracks">No hay tracks para este álbum</string>
+    <string name="txt_catalog">   Catálogo</string>
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_tracks">Tracks del álbum</string>

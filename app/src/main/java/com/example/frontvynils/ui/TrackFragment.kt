@@ -6,13 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.TrackFragmentBinding
+import com.example.frontvynils.models.Album
+import com.example.frontvynils.ui.adapters.AlbumsAdapter
 import com.example.frontvynils.ui.adapters.TracksAdapter
 import com.example.frontvynils.viewmodels.TrackViewModel
 
@@ -25,6 +30,7 @@ class TrackFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: TrackViewModel
     private var viewModelAdapter: TracksAdapter? = null
+    private var viewAlbumModelAdapter: AlbumsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +39,7 @@ class TrackFragment : Fragment() {
         _binding = TrackFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = TracksAdapter()
+        viewAlbumModelAdapter = AlbumsAdapter()
         return view
     }
 
@@ -58,6 +65,27 @@ class TrackFragment : Fragment() {
                     binding.txtNoTracks.visibility = View.VISIBLE
                 } else {
                     binding.txtNoTracks.visibility = View.GONE
+                }
+            }
+        }
+
+        viewModel.album.observe(viewLifecycleOwner){
+            it.apply {
+                viewAlbumModelAdapter!!.album = this
+                binding.album = viewAlbumModelAdapter!!.album
+                val album_cover = viewAlbumModelAdapter!!.album?.cover
+                if (album_cover != null) {
+                    Glide.with(requireContext())
+                        .load(
+                            album_cover.toUri().buildUpon().scheme("https")
+                                ?.build()
+                        )
+                        .apply(
+                            RequestOptions()
+                                .placeholder(R.drawable.loading_animation)
+
+                                .error(R.drawable.ic_broken_image))
+                        .into(binding.albumCover)
                 }
             }
         }

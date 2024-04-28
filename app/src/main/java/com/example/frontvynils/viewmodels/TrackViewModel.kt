@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.frontvynils.models.Album
 import com.example.frontvynils.models.Track
+import com.example.frontvynils.repositories.AlbumRepository
 import com.example.frontvynils.repositories.TracksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,11 +19,17 @@ import kotlinx.coroutines.withContext
 class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel(application) {
 
     private val tracksRepository = TracksRepository(application)
+    private val albumRepository = AlbumRepository(application)
 
     private val _tracks = MutableLiveData<List<Track>>()
 
+    private val _album = MutableLiveData<Album>()
+
     val tracks: LiveData<List<Track>>
         get() = _tracks
+
+    val album: LiveData<Album>
+        get() = _album
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -44,7 +52,9 @@ class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel
             viewModelScope.launch (Dispatchers.Default){
                 withContext(Dispatchers.IO){
                     val data = tracksRepository.refreshData(id)
+                    val albumData = albumRepository.refreshData2(id) //TODO cambiar nombre
                     _tracks.postValue(data)
+                    _album.postValue(albumData)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
