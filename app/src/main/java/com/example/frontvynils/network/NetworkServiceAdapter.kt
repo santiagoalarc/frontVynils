@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley
 import com.example.frontvynils.constants.StaticConstants
 import com.example.frontvynils.models.Album
 import com.example.frontvynils.models.Collector
+import com.example.frontvynils.models.Musician
 import com.example.frontvynils.models.Track
 import org.json.JSONArray
 import org.json.JSONObject
@@ -97,6 +98,31 @@ class NetworkServiceAdapter(context: Context) {
                         email = item.getString("email")
                     )
                     list.add(collector) //se agrega a medida que se procesa la respuesta
+                }
+                cont.resume(list)
+            },
+            errorListener = {
+                cont.resumeWithException(it)
+            }
+        ))
+    }
+
+    suspend fun getMusicians() = suspendCoroutine<List<Musician>> { cont ->
+        requestQueue.add(getRequest(
+            path = "musicians",
+            responseListener = { response ->
+                val responseArray = JSONArray(response)
+                val list = mutableListOf<Musician>()
+                for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
+                    val item = responseArray.getJSONObject(i)
+                    val musicians = Musician(
+                        musicianId = item.getInt("id"),
+                        name = item.getString("name"),
+                        image = item.getString("image"),
+                        description = item.getString("description"),
+                        birthDate = item.getString("birthDate")
+                    )
+                    list.add(musicians) //se agrega a medida que se procesa la respuesta
                 }
                 cont.resume(list)
             },

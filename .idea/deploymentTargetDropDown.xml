@@ -2,16 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="MainActivityTest">
-        <State />
-      </entry>
-      <entry key="TestE2E">
+      <entry key="MainActivity">
         <State />
       </entry>
       <entry key="TestFailedNavigation">
         <State />
       </entry>
+      <entry key="Tests in 'com.example.frontvynils.ui'">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="testFailedNavigation()">
         <State />
       </entry>
     </value>
