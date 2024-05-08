@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    tools:context=".ui.AlbumFragment">
+    tools:context=".ui.MusicianFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,16 +19,15 @@
             android:layout_width="101dp"
             android:layout_height="41dp"
             android:layout_gravity="left"
-            android:text="@string/txt_catalog"
+            android:text="@string/title_musicians"
             android:textColor="@color/gray"
-            android:textSize="22sp"
-            tools:ignore="RtlHardcoded" />
+            android:textSize="22sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/albumsRv"
+            android:id="@+id/musiciansRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/album_item" />
+            tools:listitem="@layout/musician_item" />
 
     </LinearLayout>
 </FrameLayout>
