@@ -13,14 +13,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MusicianViewModel(application: Application) :  AndroidViewModel(application) {
+class MusicianDetailViewModel(application: Application, musicianId: Int) :
+    AndroidViewModel(application) {
 
-    private val musiciansRepository = MusicianRepository(application)
+    private val musicianRepository = MusicianRepository(application)
 
-    private val _musicians = MutableLiveData<List<Musician>>()
+    private val _musician = MutableLiveData<Musician>()
 
-    val musicians: LiveData<List<Musician>>
-        get() = _musicians
+    val musician: LiveData<Musician>
+        get() = _musician
+
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -32,22 +34,23 @@ class MusicianViewModel(application: Application) :  AndroidViewModel(applicatio
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    val id: Int = musicianId
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
         try {
-            viewModelScope.launch (Dispatchers.Default){
-                withContext(Dispatchers.IO){
-                    val data = musiciansRepository.refreshListData()
-                    _musicians.postValue(data)
+            viewModelScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    val data = musicianRepository.refreshData(id)
+                    _musician.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
             }
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             _eventNetworkError.value = true
         }
     }
@@ -56,11 +59,11 @@ class MusicianViewModel(application: Application) :  AndroidViewModel(applicatio
         _isNetworkErrorShown.value = true
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val musicianId: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MusicianViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(MusicianDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return MusicianViewModel(app) as T
+                return MusicianDetailViewModel(app, musicianId) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

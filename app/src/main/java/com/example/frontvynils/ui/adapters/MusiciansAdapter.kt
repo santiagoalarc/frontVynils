@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.MusicianItemBinding
 import com.example.frontvynils.models.Musician
-
-//import com.example.frontvynils.ui.MusicianFragmentDirections
+import com.example.frontvynils.ui.MusicianFragmentDirections
 
 class MusiciansAdapter : RecyclerView.Adapter<MusiciansAdapter.MusicianViewHolder>() {
 
@@ -47,10 +47,10 @@ class MusiciansAdapter : RecyclerView.Adapter<MusiciansAdapter.MusicianViewHolde
         }
         holder.bind(musicians[position])
         holder.viewDataBinding.root.setOnClickListener {
-            //val action =
-                //MusicianFragmentDirections.actionMusicianFragmentToTrackFragment(musicians[position].musicianId)
+            val action =
+                MusicianFragmentDirections.actionMusicianFragmentToMusicianDetailFragment(musicians[position].id)
             // Navigate using that action
-            //holder.viewDataBinding.root.findNavController().navigate(action) //TODO agregar action
+            holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 
