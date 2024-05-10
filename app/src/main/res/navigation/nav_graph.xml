@@ -3,15 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/collectorFragment">
+    app:startDestination="@id/musicianFragment">
     <fragment
         android:id="@+id/collectorFragment"
         android:name="com.example.frontvynils.ui.CollectorFragment"
         android:label="collector_fragment"
         tools:layout="@layout/collector_fragment" >
-        <action
-            android:id="@+id/action_collectorFragment_to_albumFragment"
-            app:destination="@id/collectorFragment" />
     </fragment>
     <fragment
         android:id="@+id/musicianFragment"

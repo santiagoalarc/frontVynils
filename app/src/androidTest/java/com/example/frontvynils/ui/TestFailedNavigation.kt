@@ -35,7 +35,7 @@ class TestFailedNavigation {
     fun testFailedNavigation() {
         val bottomNavigationItemView = onView(
             allOf(
-                withId(R.id.button2),
+                withId(R.id.collectorFragment),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.bottomNavigationView),

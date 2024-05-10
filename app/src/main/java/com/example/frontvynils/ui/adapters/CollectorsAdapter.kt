@@ -1,19 +1,19 @@
 package com.example.frontvynils.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.CollectorItemBinding
 import com.example.frontvynils.models.Collector
-import com.example.frontvynils.ui.CollectorFragmentDirections
 
 class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHolder>() {
 
     var collectors: List<Collector> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -33,11 +33,11 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
         holder.viewDataBinding.also {
             it.collector = collectors[position]
         }
-        holder.viewDataBinding.root.setOnClickListener {
-            val action = CollectorFragmentDirections.actionCollectorFragmentToAlbumFragment()
+        //holder.viewDataBinding.root.setOnClickListener {
+            //val action = CollectorFragmentDirections.actionCollectorFragmentToAlbumFragment()
             // Navigate using that action
-            holder.viewDataBinding.root.findNavController().navigate(action)
-        }
+            //holder.viewDataBinding.root.findNavController().navigate(action)
+        //}
     }
 
     override fun getItemCount(): Int {
