@@ -25,4 +25,6 @@
     <string name="popularity"># popularidad</string>
     <string name="birthdate">Fecha de nacimiento:</string>
     <string name="biography">Biografía:</string>
+    <string name="search">Buscar</string>
+    <string name="generalIcon">generalIcon</string>
 </resources>
