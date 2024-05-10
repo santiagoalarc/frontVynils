@@ -14,9 +14,13 @@ import com.example.frontvynils.models.Musician
 import com.example.frontvynils.models.Track
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+
 
 class NetworkServiceAdapter(context: Context) {
 
@@ -116,7 +120,7 @@ class NetworkServiceAdapter(context: Context) {
                 for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
                     val item = responseArray.getJSONObject(i)
                     val musicians = Musician(
-                        musicianId = item.getInt("id"),
+                        id = item.getInt("id"),
                         name = item.getString("name"),
                         image = item.getString("image"),
                         description = item.getString("description"),
@@ -130,6 +134,30 @@ class NetworkServiceAdapter(context: Context) {
                 cont.resumeWithException(it)
             }
         ))
+    }
+
+    suspend fun getMusician(albumId: Int) = suspendCoroutine { cont ->
+        requestQueue.add(
+            getRequest("musicians/$albumId", { response ->
+                val resp = JSONObject(response)
+                val formatoOriginal =
+                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                val fecha: Date? = formatoOriginal.parse(resp.getString("birthDate"))
+                val formatoDeseado = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val fechaFormateada = fecha?.let { formatoDeseado.format(it) }
+                val musician = Musician(
+                    id = resp.getInt("id"),
+                    name = resp.getString("name"),
+                    image = resp.getString("image"),
+                    description = resp.getString("description"),
+                    birthDate = fechaFormateada.toString()
+                )
+
+                cont.resume(musician)
+            }, {
+                cont.resumeWithException(it)
+            })
+        )
     }
 
     suspend fun getTracks(albumId: Int) = suspendCoroutine<List<Track>> { cont ->

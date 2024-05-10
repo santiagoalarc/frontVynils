@@ -5,9 +5,14 @@ import com.example.frontvynils.models.Musician
 import com.example.frontvynils.network.NetworkServiceAdapter
 
 class MusicianRepository(val application: Application) {
-    suspend fun refreshData(): List<Musician> {
+    suspend fun refreshListData(): List<Musician> {
 
         return NetworkServiceAdapter.getInstance(application).getMusicians()
+    }
+
+    suspend fun refreshData(albumId: Int): Musician {
+
+        return NetworkServiceAdapter.getInstance(application).getMusician(albumId)
     }
 
 }
