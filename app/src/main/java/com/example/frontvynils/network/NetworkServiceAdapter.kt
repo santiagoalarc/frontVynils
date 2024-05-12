@@ -44,8 +44,9 @@ class NetworkServiceAdapter(context: Context) {
             responseListener = { response ->
                 val responseArray = JSONArray(response)
                 val list = mutableListOf<Album>()
+                var item:JSONObject?
                 for (i in 0 until responseArray.length()) {
-                    val item = responseArray.getJSONObject(i)
+                    item = responseArray.getJSONObject(i)
                     list.add(
                         i, Album(
                             albumId = item.getInt("id"),
@@ -93,8 +94,9 @@ class NetworkServiceAdapter(context: Context) {
             responseListener = { response ->
                 val responseArray = JSONArray(response)
                 val list = mutableListOf<Collector>()
+                var item:JSONObject?
                 for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
-                    val item = responseArray.getJSONObject(i)
+                    item = responseArray.getJSONObject(i)
                     val collector = Collector(
                         collectorId = item.getInt("id"),
                         name = item.getString("name"),
@@ -117,8 +119,9 @@ class NetworkServiceAdapter(context: Context) {
             responseListener = { response ->
                 val responseArray = JSONArray(response)
                 val list = mutableListOf<Musician>()
+                var item:JSONObject?
                 for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
-                    val item = responseArray.getJSONObject(i)
+                    item = responseArray.getJSONObject(i)
                     val musicians = Musician(
                         id = item.getInt("id"),
                         name = item.getString("name"),
@@ -140,17 +143,17 @@ class NetworkServiceAdapter(context: Context) {
         requestQueue.add(
             getRequest("musicians/$albumId", { response ->
                 val resp = JSONObject(response)
-                val formatoOriginal =
+                val originalFormat =
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-                val fecha: Date? = formatoOriginal.parse(resp.getString("birthDate"))
-                val formatoDeseado = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val fechaFormateada = fecha?.let { formatoDeseado.format(it) }
+                val birthDate: Date? = originalFormat.parse(resp.getString("birthDate"))
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val dateFormatted = birthDate?.let { dateFormat.format(it) }
                 val musician = Musician(
                     id = resp.getInt("id"),
                     name = resp.getString("name"),
                     image = resp.getString("image"),
                     description = resp.getString("description"),
-                    birthDate = fechaFormateada.toString()
+                    birthDate = dateFormatted.toString()
                 )
 
                 cont.resume(musician)
