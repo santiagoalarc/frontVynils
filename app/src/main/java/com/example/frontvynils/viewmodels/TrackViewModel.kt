@@ -52,7 +52,7 @@ class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel
             viewModelScope.launch (Dispatchers.Default){
                 withContext(Dispatchers.IO){
                     val data = tracksRepository.refreshData(id)
-                    val albumData = albumRepository.refreshData2(id) //TODO cambiar nombre
+                    val albumData = albumRepository.refreshData(id)
                     _tracks.postValue(data)
                     _album.postValue(albumData)
                 }
