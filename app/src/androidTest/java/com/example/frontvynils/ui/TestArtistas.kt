@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withClassName
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -20,64 +22,42 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.concurrent.thread
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class TestArtistas {
 
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun mainActivityTest() {
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(5231)
-
-        val recyclerView = onView(
+    fun testArtistas() {
+        val textView = onView(
             allOf(
-                withId(R.id.albumsRv),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    1
-                )
-            )
-        )
-        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
-
-        val appCompatImageButton = onView(
-            allOf(
-                withContentDescription("Navigate up"),
-                childAtPosition(
-                    allOf(
-                        withId(R.id.my_toolbar),
-                        childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                            0
-                        )
-                    ),
-                    2
-                ),
+                withText("Artistas"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java))),
                 isDisplayed()
             )
         )
-        appCompatImageButton.perform(click())
+        textView.check(matches(isDisplayed()))
 
-        val recyclerView2 = onView(
+        val recyclerView = onView(
             allOf(
-                withId(R.id.albumsRv),
+                withId(R.id.musiciansRv),
                 childAtPosition(
                     withClassName(`is`("android.widget.LinearLayout")),
                     1
                 )
             )
         )
-        recyclerView2.perform(actionOnItemAtPosition<ViewHolder>(2, click()))
+        Thread.sleep(500)
+        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
     }
 
     private fun childAtPosition(
