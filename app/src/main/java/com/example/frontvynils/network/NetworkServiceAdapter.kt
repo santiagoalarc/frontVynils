@@ -10,12 +10,17 @@ import com.android.volley.toolbox.Volley
 import com.example.frontvynils.constants.StaticConstants
 import com.example.frontvynils.models.Album
 import com.example.frontvynils.models.Collector
+import com.example.frontvynils.models.Musician
 import com.example.frontvynils.models.Track
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+
 
 class NetworkServiceAdapter(context: Context) {
 
@@ -39,8 +44,9 @@ class NetworkServiceAdapter(context: Context) {
             responseListener = { response ->
                 val responseArray = JSONArray(response)
                 val list = mutableListOf<Album>()
+                var item:JSONObject?
                 for (i in 0 until responseArray.length()) {
-                    val item = responseArray.getJSONObject(i)
+                    item = responseArray.getJSONObject(i)
                     list.add(
                         i, Album(
                             albumId = item.getInt("id"),
@@ -88,8 +94,9 @@ class NetworkServiceAdapter(context: Context) {
             responseListener = { response ->
                 val responseArray = JSONArray(response)
                 val list = mutableListOf<Collector>()
+                var item:JSONObject?
                 for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
-                    val item = responseArray.getJSONObject(i)
+                    item = responseArray.getJSONObject(i)
                     val collector = Collector(
                         collectorId = item.getInt("id"),
                         name = item.getString("name"),
@@ -104,6 +111,56 @@ class NetworkServiceAdapter(context: Context) {
                 cont.resumeWithException(it)
             }
         ))
+    }
+
+    suspend fun getMusicians() = suspendCoroutine<List<Musician>> { cont ->
+        requestQueue.add(getRequest(
+            path = "musicians",
+            responseListener = { response ->
+                val responseArray = JSONArray(response)
+                val list = mutableListOf<Musician>()
+                var item:JSONObject?
+                for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
+                    item = responseArray.getJSONObject(i)
+                    val musicians = Musician(
+                        id = item.getInt("id"),
+                        name = item.getString("name"),
+                        image = item.getString("image"),
+                        description = item.getString("description"),
+                        birthDate = item.getString("birthDate")
+                    )
+                    list.add(musicians) //se agrega a medida que se procesa la respuesta
+                }
+                cont.resume(list)
+            },
+            errorListener = {
+                cont.resumeWithException(it)
+            }
+        ))
+    }
+
+    suspend fun getMusician(albumId: Int) = suspendCoroutine { cont ->
+        requestQueue.add(
+            getRequest("musicians/$albumId", { response ->
+                val resp = JSONObject(response)
+                val originalFormat =
+                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                val birthDate: Date? = originalFormat.parse(resp.getString("birthDate"))
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val dateFormatted = birthDate?.let { dateFormat.format(it) }
+                val musician = Musician(
+                    id = resp.getInt("id"),
+                    name = resp.getString("name"),
+                    image = resp.getString("image"),
+                    description = resp.getString("description"),
+                    birthDate = dateFormatted.toString()
+                )
+
+                cont.resume(musician)
+            }, {
+                cont.resumeWithException(it)
+            })
+        )
     }
 
     suspend fun getTracks(albumId: Int) = suspendCoroutine<List<Track>> { cont ->

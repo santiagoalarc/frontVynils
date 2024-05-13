@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/albumFragment">
+    app:startDestination="@id/musicianFragment">
     <fragment
         android:id="@+id/collectorFragment"
         android:name="com.example.frontvynils.ui.CollectorFragment"
         android:label="collector_fragment"
         tools:layout="@layout/collector_fragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/musicianFragment"
+        android:name="com.example.frontvynils.ui.MusicianFragment"
+        android:label="musician_fragment"
+        tools:layout="@layout/musician_fragment" >
         <action
-            android:id="@+id/action_collectorFragment_to_albumFragment"
-            app:destination="@id/albumFragment" />
+            android:id="@+id/action_musicianFragment_to_musicianDetailFragment"
+            app:destination="@id/musicianDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/albumFragment"
@@ -29,6 +35,15 @@
         tools:layout="@layout/track_fragment" >
         <argument
             android:name="albumId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicianDetailFragment"
+        android:name="com.example.frontvynils.ui.MusicianDetailFragment"
+        android:label="musician_detail_fragment"
+        tools:layout="@layout/musician_detail_fragment" >
+        <argument
+            android:name="musicianId"
             app:argType="integer" />
     </fragment>
 </navigation>
