@@ -27,4 +27,7 @@
     <string name="biography">Biografía:</string>
     <string name="search">Buscar</string>
     <string name="generalIcon">generalIcon</string>
+    <string name="phone_number">Teléfono</string>
+    <string name="email">Email:</string>
+    <string name="name">Nombre:</string>
 </resources>
