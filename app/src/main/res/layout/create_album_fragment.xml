@@ -49,42 +49,21 @@
                     android:textSize="22sp"
                     tools:ignore="TextFields" />
 
-                <!-- Campo para seleccionar el género -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+
+                <Spinner
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Género">
+                    android:id="@+id/spinnerGenre"
+                    android:padding="20dp"
+                    android:hint="Género"
+                    android:textSize="22sp"/>
 
-                    <Spinner
-                        android:id="@+id/spinnerGenre"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:textColor="@color/white"
-                        android:dropDownWidth="250dp"
-                        android:textColorHint="@color/white"
-                        android:spinnerMode="dropdown" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <!-- Campo para seleccionar el Record -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Compañia discográfica">
-
-                    <Spinner
-                        android:id="@+id/spinnerRecord"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        android:spinnerMode="dropdown" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
+                    android:id="@+id/spinnerRecord"
+                    android:padding="20dp"
+                    android:textSize="22sp"/>
 
 
                 <ImageView

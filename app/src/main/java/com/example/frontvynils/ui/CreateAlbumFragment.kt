@@ -8,9 +8,11 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.frontvynils.R
 import com.example.frontvynils.databinding.CreateAlbumFragmentBinding
 import com.example.frontvynils.ui.adapters.AlbumsAdapter
 import com.example.frontvynils.viewmodels.AlbumViewModel
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -33,15 +35,17 @@ class CreateAlbumFragment : Fragment() {
             _binding = CreateAlbumFragmentBinding.inflate(inflater, container, false)
             val view = binding.root
 
-            val genres = arrayOf("Classical", "Salsa", "Rock", "Folk")
-            val recordLabel = arrayOf("Sony Music", "EMI", "Discos Fuentes", "Elektra", "Fania Records")
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genres)
+            val genres = arrayOf("Género", "Classical", "Salsa", "Rock", "Folk")
+            val recordLabel = arrayOf("Compañía discográfica", "Sony Music", "EMI", "Discos Fuentes", "Elektra", "Fania Records")
+            val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, genres)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerGenre.adapter = adapter
 
-            val recordAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, recordLabel)
+
+            val recordAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, recordLabel)
             recordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerRecord.adapter = recordAdapter
+
 
 
             viewModelAdapter = AlbumsAdapter()
