@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:hint="Nombre"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_dark"
+                    android:textSize="22sp"
+                    tools:ignore="TextFields" />
+
+                <EditText
+                    android:id="@+id/editTextDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:hint="Descripción"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_dark"
+                    android:textSize="22sp"
+                    tools:ignore="TextFields" />
+
+                <!-- Campo para seleccionar el género -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Género">
+
+                    <Spinner
+                        android:id="@+id/spinnerGenre"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textColor="@color/white"
+                        android:dropDownWidth="250dp"
+                        android:textColorHint="@color/white"
+                        android:spinnerMode="dropdown" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <!-- Campo para seleccionar el Record -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Compañia discográfica">
+
+                    <Spinner
+                        android:id="@+id/spinnerRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <ImageView
+                    android:id="@+id/saveAlbum"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    android:contentDescription="Guardar Album"
+                    android:gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/content_save"
+                    android:state_checked="true"
+                    app:strokeWidth="0dp"
+                    app:tint="@color/gray" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
