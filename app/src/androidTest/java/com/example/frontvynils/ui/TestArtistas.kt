@@ -26,7 +26,6 @@ import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.concurrent.thread
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)

@@ -12,12 +12,17 @@ import com.example.frontvynils.repositories.AlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class AlbumViewModel(application: Application) :  AndroidViewModel(application) {
 
     private val albumsRepository = AlbumRepository(application)
 
     private val _albums = MutableLiveData<List<Album>>()
+
+    private val _postAlbumResult = MutableLiveData<Boolean>()
+    val postAlbumResult: LiveData<Boolean>
+        get() = _postAlbumResult
 
     val albums: LiveData<List<Album>>
         get() = _albums
@@ -55,6 +60,17 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+    }
+
+    fun postAlbum(album: JSONObject) {
+        viewModelScope.launch {
+            try {
+                albumsRepository.saveData(album)
+                _postAlbumResult.value = true
+            } catch (e: Exception) {
+                _postAlbumResult.value = false
+            }
+        }
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

@@ -40,7 +40,6 @@ class AlbumFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.albumsRv
-        //recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = viewModelAdapter
         navc = Navigation.findNavController(view)
