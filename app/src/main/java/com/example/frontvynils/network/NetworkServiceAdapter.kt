@@ -115,7 +115,7 @@ class NetworkServiceAdapter(context: Context) {
                 for (i in 0 until responseArray.length()) { //inicializado como variable de retorno
                     item = responseArray.getJSONObject(i)
                     val collector = Collector(
-                        collectorId = item.getInt("id"),
+                        id = item.getInt("id"),
                         name = item.getString("name"),
                         telephone = item.getString("telephone"),
                         email = item.getString("email")
@@ -128,6 +128,23 @@ class NetworkServiceAdapter(context: Context) {
                 cont.resumeWithException(it)
             }
         ))
+    }
+
+    suspend fun getCollector(collectorId: Int) = suspendCoroutine { cont ->
+        requestQueue.add(
+            getRequest("collectors/$collectorId", { response ->
+                val resp = JSONObject(response)
+                val collector = Collector(
+                    id = resp.getInt("id"),
+                    name = resp.getString("name"),
+                    telephone = resp.getString("telephone"),
+                    email = resp.getString("email")
+                )
+                cont.resume(collector)
+            }, {
+                cont.resumeWithException(it)
+            })
+        )
     }
 
     suspend fun getMusicians() = suspendCoroutine<List<Musician>> { cont ->
