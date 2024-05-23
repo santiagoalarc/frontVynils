@@ -77,6 +77,19 @@
                     android:textSize="22sp"
                     tools:ignore="TextFields" />
 
+                <EditText
+                    android:id="@+id/editTextCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:hint="@string/album_cover"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_dark"
+                    android:textSize="22sp"
+                    tools:ignore="TextFields" />
+
                 <ImageView
                     android:id="@+id/saveAlbum"
                     android:layout_width="40dp"

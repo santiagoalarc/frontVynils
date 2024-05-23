@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.CreateAlbumFragmentBinding
 import com.example.frontvynils.ui.adapters.AlbumsAdapter
@@ -61,11 +60,12 @@ class CreateAlbumFragment : Fragment() {
             val albumDescription = binding.editTextDescription.text.toString()
             val albumGenre = binding.spinnerGenre.selectedItem.toString()
             val albumRecord = binding.spinnerRecord.selectedItem.toString()
+            val albumCover = binding.editTextCover.text.toString()
             val albumReleaseDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault()).format(Date())
 
             val jsonBody = JSONObject().apply {
                 put("name", albumName)
-                put("cover", "https://i.pinimg.com/564x/aa/5f/ed/aa5fed7fac161cc8f41d1e79db917a7cd.jpg") // TODO cambiar
+                put("cover", albumCover)
                 put("releaseDate", albumReleaseDate)
                 put("description", albumDescription)
                 put("genre", albumGenre)

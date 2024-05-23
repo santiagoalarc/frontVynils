@@ -33,4 +33,5 @@
     <string name="album_genre">Género</string>
     <string name="album_release">Fecha de lanzamiento</string>
     <string name="save_album">Guardar Album</string>
+    <string name="album_cover">URL portada</string>
 </resources>
