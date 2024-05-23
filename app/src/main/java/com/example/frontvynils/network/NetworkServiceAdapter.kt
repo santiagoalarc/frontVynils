@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.frontvynils.constants.StaticConstants
@@ -86,6 +87,22 @@ class NetworkServiceAdapter(context: Context) {
                 cont.resumeWithException(it)
             })
         )
+    }
+
+    suspend fun postAlbum(albumJson: JSONObject) = suspendCoroutine<Unit> { cont ->
+        val url = "${StaticConstants.API_BASE_URL}albums"
+
+        val request = JsonObjectRequest(
+            Request.Method.POST, url, albumJson,
+            { response ->
+                cont.resume(Unit)
+            },
+            { error ->
+                cont.resumeWithException(error)
+            }
+        )
+
+        requestQueue.add(request)
     }
 
     suspend fun getCollectors() = suspendCoroutine<List<Collector>> { cont ->
@@ -215,6 +232,10 @@ class NetworkServiceAdapter(context: Context) {
             responseListener,
             errorListener
         )
+    }
+
+    private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
+        return  JsonObjectRequest(Request.Method.POST, "${StaticConstants.API_BASE_URL}${path}", body, responseListener, errorListener)
     }
 
 }

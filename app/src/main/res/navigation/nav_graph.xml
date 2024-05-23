@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_albumFragment_to_trackFragment"
             app:destination="@id/trackFragment" />
+        <action
+            android:id="@+id/action_albumFragment_to_createAlbumFragment"
+            app:destination="@id/createAlbumFragment" />
     </fragment>
     <fragment
         android:id="@+id/trackFragment"
@@ -57,5 +60,11 @@
         <argument
             android:name="collectorId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAlbumFragment"
+        android:name="com.example.frontvynils.ui.CreateAlbumFragment"
+        android:label="create_album_fragment"
+        tools:layout="@layout/create_album_fragment" >
     </fragment>
 </navigation>
