@@ -17,54 +17,49 @@ import com.example.frontvynils.ui.adapters.AlbumsAdapter
 import com.example.frontvynils.viewmodels.AlbumViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class AlbumFragment : Fragment(), View.OnClickListener {
     private var _binding: AlbumFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: AlbumViewModel
     private var viewModelAdapter: AlbumsAdapter? = null
-    private var navc: NavController ?= null
+    private var navc: NavController? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = AlbumFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
         viewModelAdapter = AlbumsAdapter()
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         recyclerView = binding.albumsRv
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = viewModelAdapter
         navc = Navigation.findNavController(view)
         view.findViewById<FloatingActionButton>(R.id.floatingActionButton)?.setOnClickListener(this)
-    }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        activity.actionBar?.title = getString(R.string.title_albums)
         viewModel = ViewModelProvider(
             this,
-            AlbumViewModel.Factory(activity.application)
-        )[AlbumViewModel::class.java]
-        viewModel.albums.observe(viewLifecycleOwner) {
-            it.apply {
-                viewModelAdapter!!.albums = this
+            AlbumViewModel.Factory(requireActivity().application)
+        ).get(AlbumViewModel::class.java)
+
+        viewModel.albums.observe(viewLifecycleOwner) { albums ->
+            albums?.let {
+                viewModelAdapter?.albums = it
             }
         }
+
         viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
             if (isNetworkError) onNetworkError()
         }
+
+        // Llama a la función para cargar los datos cuando se crea la vista
+        viewModel.refreshAlbums()
     }
 
     override fun onDestroyView() {
@@ -82,5 +77,4 @@ class AlbumFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         navc?.navigate(R.id.action_albumFragment_to_createAlbumFragment)
     }
-
 }

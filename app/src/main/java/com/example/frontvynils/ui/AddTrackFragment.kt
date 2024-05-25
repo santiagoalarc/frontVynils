@@ -74,12 +74,6 @@ class AddTrackFragment : Fragment() {
         viewModel = ViewModelProvider(this, TrackViewModel.Factory(activity.application, args.albumId))[TrackViewModel::class.java]
         //viewModel = ViewModelProvider(this, TrackViewModel.Factory(activity.application, 1))[TrackViewModel::class.java]
 
-        viewModel.track.observe(viewLifecycleOwner){
-            it.apply {
-                //viewModelAdapter!!.album = this
-                //binding.collector = viewCollectorModelAdapter!!.collector
-            }
-        }
         viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
             if (isNetworkError) onNetworkError()
         }
