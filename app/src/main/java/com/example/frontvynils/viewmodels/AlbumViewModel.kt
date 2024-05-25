@@ -21,8 +21,6 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
     private val _albums = MutableLiveData<List<Album>>()
 
     private val _postAlbumResult = MutableLiveData<Boolean>()
-    val postAlbumResult: LiveData<Boolean>
-        get() = _postAlbumResult
 
     val albums: LiveData<List<Album>>
         get() = _albums
@@ -80,6 +78,19 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
                 return AlbumViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
+
+    fun refreshAlbums() {
+        viewModelScope.launch {
+            try {
+                val albumsList = albumsRepository.refreshListData()
+                _albums.value = albumsList
+                _eventNetworkError.value = false
+                _isNetworkErrorShown.value = false
+            } catch (e: Exception) {
+                _eventNetworkError.value = true
+            }
         }
     }
 
