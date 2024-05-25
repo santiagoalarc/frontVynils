@@ -1,5 +1,6 @@
 package com.example.frontvynils.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -7,11 +8,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontvynils.R
 import com.example.frontvynils.databinding.TrackItemBinding
+import com.example.frontvynils.models.Album
 import com.example.frontvynils.models.Track
 
 class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>() {
 
     var tracks: List<Track> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var album: Album? = null
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()

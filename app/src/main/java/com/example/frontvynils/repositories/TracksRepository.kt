@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.frontvynils.models.Track
 import com.example.frontvynils.network.CacheManager
 import com.example.frontvynils.network.NetworkServiceAdapter
+import org.json.JSONObject
 
 class TracksRepository(val application: Application) {
     suspend fun refreshData(albumId: Int): List<Track> {
@@ -19,5 +20,10 @@ class TracksRepository(val application: Application) {
             Log.d("Cache decision", "return ${potentialResp.size} elements from cache")
             potentialResp
         }
+    }
+
+    suspend fun saveData(trackJson: JSONObject, albumId: Int) {
+
+        return NetworkServiceAdapter.getInstance(application).postTrack(trackJson, albumId)
     }
 }

@@ -72,6 +72,16 @@
             tools:listitem="@layout/track_item">
 
         </androidx.recyclerview.widget.RecyclerView>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingSaveTrackActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="8dp"
+            android:src="@drawable/note_plus"
+            android:focusable="true"
+            android:contentDescription="@string/btn_save_track" />
     </LinearLayout>
+
 </layout>

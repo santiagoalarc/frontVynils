@@ -221,6 +221,22 @@ class NetworkServiceAdapter(context: Context) {
         )
     }
 
+    suspend fun postTrack(trackJson: JSONObject, albumId: Int) = suspendCoroutine<Unit> { cont ->
+        val url = "${StaticConstants.API_BASE_URL}albums/${albumId}/tracks"
+
+        val request = JsonObjectRequest(
+            Request.Method.POST, url, trackJson,
+            { response ->
+                cont.resume(Unit)
+            },
+            { error ->
+                cont.resumeWithException(error)
+            }
+        )
+
+        requestQueue.add(request)
+    }
+
     private fun getRequest(
         path: String,
         responseListener: Response.Listener<String>,

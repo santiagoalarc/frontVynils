@@ -15,6 +15,7 @@ import com.example.frontvynils.repositories.TracksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel(application) {
 
@@ -23,10 +24,20 @@ class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel
 
     private val _tracks = MutableLiveData<List<Track>>()
 
+    private val _track = MutableLiveData<Track>()
+
     private val _album = MutableLiveData<Album>()
 
     val tracks: LiveData<List<Track>>
         get() = _tracks
+
+    val track: LiveData<Track>
+        get() = _track
+
+    private val _postTrackResult = MutableLiveData<Boolean>()
+    val postTrackResult: LiveData<Boolean>
+        get() = _postTrackResult
+
 
     val album: LiveData<Album>
         get() = _album
@@ -76,6 +87,17 @@ class TrackViewModel(application: Application, albumId: Int) :  AndroidViewModel
                 return TrackViewModel(app, albumId) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
+
+    fun postTrack(trackObject: JSONObject, albumId: Int) {
+        viewModelScope.launch {
+            try {
+                tracksRepository.saveData(trackObject, albumId)
+                _postTrackResult.value = true
+            } catch (e: Exception) {
+                _postTrackResult.value = false
+            }
         }
     }
 }
