@@ -9,6 +9,9 @@
         android:name="com.example.frontvynils.ui.CollectorFragment"
         android:label="collector_fragment"
         tools:layout="@layout/collector_fragment" >
+        <action
+            android:id="@+id/action_collectorFragment_to_collectorDetailFragment"
+            app:destination="@id/collectorDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/musicianFragment"
@@ -27,6 +30,9 @@
         <action
             android:id="@+id/action_albumFragment_to_trackFragment"
             app:destination="@id/trackFragment" />
+        <action
+            android:id="@+id/action_albumFragment_to_createAlbumFragment"
+            app:destination="@id/createAlbumFragment" />
     </fragment>
     <fragment
         android:id="@+id/trackFragment"
@@ -36,6 +42,9 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_albumDetailFragment_to_addTrackFragment"
+            app:destination="@id/addTrackFragment" />
     </fragment>
     <fragment
         android:id="@+id/musicianDetailFragment"
@@ -44,6 +53,30 @@
         tools:layout="@layout/musician_detail_fragment" >
         <argument
             android:name="musicianId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectorDetailFragment"
+        android:name="com.example.frontvynils.ui.CollectorDetailFragment"
+        android:label="collector_detail_fragment"
+        tools:layout="@layout/collector_detail_fragment" >
+        <argument
+            android:name="collectorId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAlbumFragment"
+        android:name="com.example.frontvynils.ui.CreateAlbumFragment"
+        android:label="create_album_fragment"
+        tools:layout="@layout/create_album_fragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/addTrackFragment"
+        android:name="com.example.frontvynils.ui.AddTrackFragment"
+        android:label="add_track_fragment"
+        tools:layout="@layout/add_track_fragment" >
+        <argument
+            android:name="albumId"
             app:argType="integer" />
     </fragment>
 </navigation>

@@ -12,12 +12,15 @@ import com.example.frontvynils.repositories.AlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class AlbumViewModel(application: Application) :  AndroidViewModel(application) {
 
     private val albumsRepository = AlbumRepository(application)
 
     private val _albums = MutableLiveData<List<Album>>()
+
+    private val _postAlbumResult = MutableLiveData<Boolean>()
 
     val albums: LiveData<List<Album>>
         get() = _albums
@@ -57,6 +60,17 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
         _isNetworkErrorShown.value = true
     }
 
+    fun postAlbum(album: JSONObject) {
+        viewModelScope.launch {
+            try {
+                albumsRepository.saveData(album)
+                _postAlbumResult.value = true
+            } catch (e: Exception) {
+                _postAlbumResult.value = false
+            }
+        }
+    }
+
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
@@ -64,6 +78,19 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
                 return AlbumViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
+
+    fun refreshAlbums() {
+        viewModelScope.launch {
+            try {
+                val albumsList = albumsRepository.refreshListData()
+                _albums.value = albumsList
+                _eventNetworkError.value = false
+                _isNetworkErrorShown.value = false
+            } catch (e: Exception) {
+                _eventNetworkError.value = true
+            }
         }
     }
 
