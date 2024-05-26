@@ -19,6 +19,25 @@
     <string name="txt_no_tracks">No hay tracks para este álbum</string>
     <string name="txt_catalog">   Catálogo</string>
     <string name="title_albums">Albums</string>
+    <string name="title_musicians">   Artistas</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_tracks">Tracks del álbum</string>
+    <string name="popularity"># popularidad</string>
+    <string name="birthdate">Fecha de nacimiento:</string>
+    <string name="biography">Biografía:</string>
+    <string name="search">Buscar</string>
+    <string name="generalIcon">generalIcon</string>
+    <string name="create_album">Crear un álbum</string>
+    <string name="album_name">Nombre</string>
+    <string name="album_description">Descripción</string>
+    <string name="album_genre">Género</string>
+    <string name="album_release">Fecha de lanzamiento</string>
+    <string name="save_album">Guardar Album</string>
+    <string name="album_cover">URL portada</string>
+    <string name="phone_number">Teléfono</string>
+    <string name="email">Email:</string>
+    <string name="name">Nombre:</string>
+    <string name="btn_save_track">Botón para guardar Track</string>
+    <string name="track_name">Nombre track</string>
+    <string name="duration_track">Duración del track</string>
 </resources>

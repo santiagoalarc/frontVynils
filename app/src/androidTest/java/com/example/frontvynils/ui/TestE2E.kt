@@ -10,7 +10,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withClassName
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -18,7 +17,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.frontvynils.R
-import kotlinx.coroutines.delay
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -28,7 +26,6 @@ import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.concurrent.thread
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -42,14 +39,86 @@ class TestE2E {
     fun testE2E() {
         val textView = onView(
             allOf(
+                withText("Artistas"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        Thread.sleep(500)
+        textView.check(matches(isDisplayed()))
+
+        val recyclerView = onView(
+            allOf(
+                withId(R.id.musiciansRv),
+                childAtPosition(
+                    withClassName(`is`("android.widget.LinearLayout")),
+                    1
+                )
+            )
+        )
+        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
+
+        val textView2 = onView(
+            allOf(
+                withId(R.id.topLeftText),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        Thread.sleep(500)
+        textView2.check(matches(isDisplayed()))
+
+        val bottomNavigationItemView = onView(
+            allOf(
+                withId(R.id.collectorFragment),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.bottomNavigationView),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView.perform(click())
+
+        val editText = onView(
+            allOf(
+                withId(R.id.search_edit_text),
+                withParent(withParent(withId(R.id.nav_host_fragment))),
+                isDisplayed()
+            )
+        )
+        Thread.sleep(500)
+        editText.check(matches(isDisplayed()))
+
+        val bottomNavigationItemView2 = onView(
+            allOf(
+                withId(R.id.albumFragment),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.bottomNavigationView),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView2.perform(click())
+
+        val textView3 = onView(
+            allOf(
                 withText("Catálogo"),
                 withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java))),
                 isDisplayed()
             )
         )
-        textView.check(matches(isDisplayed()))
+        Thread.sleep(500)
+        textView3.check(matches(isDisplayed()))
 
-        val recyclerView = onView(
+        val recyclerView2 = onView(
             allOf(
                 withId(R.id.albumsRv),
                 childAtPosition(
@@ -58,17 +127,17 @@ class TestE2E {
                 )
             )
         )
-        Thread.sleep(500)
-        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
+        recyclerView2.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
 
-        val imageView = onView(
+        val textView4 = onView(
             allOf(
-                withId(R.id.album_cover),
+                withId(R.id.textView6),
                 withParent(withParent(IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java))),
                 isDisplayed()
             )
         )
-        imageView.check(matches(isDisplayed()))
+        Thread.sleep(500)
+        textView4.check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(

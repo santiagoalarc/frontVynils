@@ -1,5 +1,6 @@
 package com.example.frontvynils.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -14,13 +15,21 @@ import com.example.frontvynils.ui.CollectorFragmentDirections
 class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHolder>() {
 
     var collectors: List<Collector> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var collector: Collector? = null
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectorViewHolder {
-        val withDataBinding: CollectorItemBinding = DataBindingUtil.inflate(
+        val withDataBinding: CollectorItemBinding  = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             CollectorViewHolder.LAYOUT,
             parent,
@@ -34,7 +43,7 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
             it.collector = collectors[position]
         }
         holder.viewDataBinding.root.setOnClickListener {
-            val action = CollectorFragmentDirections.actionCollectorFragmentToAlbumFragment()
+            val action = CollectorFragmentDirections.actionCollectorFragmentToCollectorDetailFragment(collectors[position].id)
             // Navigate using that action
             holder.viewDataBinding.root.findNavController().navigate(action)
         }

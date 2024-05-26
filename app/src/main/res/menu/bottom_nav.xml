@@ -3,12 +3,12 @@
 
     <item android:title=""
         android:icon="@drawable/account"
-        android:id="@+id/button1"/>
+        android:id="@+id/musicianFragment"/>
     <item android:title=""
         android:icon="@drawable/spa_outline"
-        android:id="@+id/button2"/>
+        android:id="@+id/collectorFragment"/>
     <item android:title=""
         android:icon="@drawable/playlist_music"
-        android:id="@+id/button3"/>
+        android:id="@+id/albumFragment"/>
 </menu>
 
