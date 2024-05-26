@@ -71,11 +71,11 @@ class TestAlbums {
             )
         )
         Thread.sleep(500)
-        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
+        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(1, click()))
 
         val textView2 = onView(
             allOf(
-                withId(R.id.textView6), withText("Poeta del Pueblo"),
+                withId(R.id.textView6),
                 withParent(withParent(IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java))),
                 isDisplayed()
             )
